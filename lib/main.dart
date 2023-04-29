@@ -62,6 +62,16 @@ class _CalculatorState extends State<Calculator> {
         } else if (operator == '%') {
           result = (firstNumber! * secondNumber!) / 100;
         }
+
+        setState(() {
+          // TODO: convert the first and second number to double;
+          // Below statement means that we can continue the next operation
+          // once user presses '=' by taking previous result as first number
+          // firstNumber = result
+          firstNumber = null;
+          operator = null;
+          secondNumber = null;
+        });
       });
     }
 
@@ -156,11 +166,14 @@ class _CalculatorState extends State<Calculator> {
                 ),
                 Align(
                   alignment: Alignment.bottomRight,
-                  child: Text(
-                    '$result',
-                    style: TextStyle(
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                      fontSize: 96,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Text(
+                      '${result}',
+                      style: TextStyle(
+                        color: Color.fromRGBO(255, 255, 255, 1),
+                        fontSize: 96,
+                      ),
                     ),
                   ),
                 ),
