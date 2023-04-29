@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
       home: const MyHomePage(),
     );
@@ -38,30 +37,52 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
-  int result = 0;
+  double result = 0.toDouble();
   int? firstNumber;
+  String? __number;
   int? secondNumber;
   String? operator;
 
   void onButtonClick(var character) {
+    if (character == '=') {
+      return setState(() {
+        if (firstNumber == null || secondNumber == null) return;
+
+        if (operator == '+') {
+          result = (firstNumber! + secondNumber!).toDouble();
+        } else if (operator == '-') {
+          result = (firstNumber! - secondNumber!).toDouble();
+        } else if (operator == 'x') {
+          result = (firstNumber! * secondNumber!).toDouble();
+        } else if (operator == '/') {
+          result = firstNumber! / secondNumber!;
+        } else if (operator == '%') {
+          result = (firstNumber! * secondNumber!) / 100;
+        }
+      });
+    }
+
     if (character.runtimeType == String) {
       if (firstNumber == null) {
         return;
       }
       return setState(() {
+        firstNumber = int.parse(__number!);
         operator = character;
       });
     }
 
     if (character.runtimeType == int) {
-      if (firstNumber == null) {
+      if (operator == null) {
         return setState(() {
-          firstNumber = character;
+          __number = character.toString();
+          firstNumber = int.parse(__number!);
         });
       }
-      if (secondNumber == null) {
+      if (firstNumber == null) {
         return setState(() {
-          secondNumber = character;
+          __number = character.toString();
+          secondNumber = int.parse(__number!);
         });
       }
       return;
@@ -134,7 +155,16 @@ class _CalculatorState extends State<Calculator> {
                     children: [
                       KeyButton(
                         text: 'C',
-                        onClick: () {},
+                        onClick: () {
+                          setState(() {
+                            if (firstNumber != null) {
+                              return firstNumber = null;
+                            }
+                            if (secondNumber != null) {
+                              return secondNumber = null;
+                            }
+                          });
+                        },
                       ),
                       Expanded(
                         child: ElevatedButton(
@@ -152,11 +182,15 @@ class _CalculatorState extends State<Calculator> {
                       ),
                       KeyButton(
                         text: '%',
-                        onClick: () {},
+                        onClick: () {
+                          onButtonClick('%');
+                        },
                       ),
                       KeyButton(
                         text: '/',
-                        onClick: () {},
+                        onClick: () {
+                          onButtonClick('/');
+                        },
                       ),
                     ],
                   ),
@@ -169,19 +203,27 @@ class _CalculatorState extends State<Calculator> {
                     children: [
                       KeyButton(
                         text: '7',
-                        onClick: () {},
+                        onClick: () {
+                          onButtonClick(7);
+                        },
                       ),
                       KeyButton(
                         text: '8',
-                        onClick: () {},
+                        onClick: () {
+                          onButtonClick(8);
+                        },
                       ),
                       KeyButton(
                         text: '9',
-                        onClick: () {},
+                        onClick: () {
+                          onButtonClick(9);
+                        },
                       ),
                       KeyButton(
                         text: 'x',
-                        onClick: () {},
+                        onClick: () {
+                          onButtonClick('x');
+                        },
                       ),
                     ],
                   ),
@@ -194,19 +236,27 @@ class _CalculatorState extends State<Calculator> {
                     children: [
                       KeyButton(
                         text: '4',
-                        onClick: () {},
+                        onClick: () {
+                          onButtonClick(4);
+                        },
                       ),
                       KeyButton(
                         text: '5',
-                        onClick: () {},
+                        onClick: () {
+                          onButtonClick(5);
+                        },
                       ),
                       KeyButton(
                         text: '6',
-                        onClick: () {},
+                        onClick: () {
+                          onButtonClick(6);
+                        },
                       ),
                       KeyButton(
                         text: '-',
-                        onClick: () {},
+                        onClick: () {
+                          onButtonClick('-');
+                        },
                       ),
                     ],
                   ),
@@ -219,19 +269,27 @@ class _CalculatorState extends State<Calculator> {
                     children: [
                       KeyButton(
                         text: '1',
-                        onClick: () {},
+                        onClick: () {
+                          onButtonClick(1);
+                        },
                       ),
                       KeyButton(
                         text: '2',
-                        onClick: () {},
+                        onClick: () {
+                          onButtonClick(2);
+                        },
                       ),
                       KeyButton(
                         text: '3',
-                        onClick: () {},
+                        onClick: () {
+                          onButtonClick(3);
+                        },
                       ),
                       KeyButton(
                         text: '+',
-                        onClick: () {},
+                        onClick: () {
+                          onButtonClick('+');
+                        },
                       ),
                     ],
                   ),
@@ -244,19 +302,32 @@ class _CalculatorState extends State<Calculator> {
                     children: [
                       KeyButton(
                         text: 'AC',
-                        onClick: () {},
+                        onClick: () {
+                          setState(() {
+                            result = 0.toDouble();
+                            firstNumber = null;
+                            secondNumber = null;
+                            operator = null;
+                          });
+                        },
                       ),
                       KeyButton(
                         text: '0',
-                        onClick: () {},
+                        onClick: () {
+                          onButtonClick(0);
+                        },
                       ),
                       KeyButton(
                         text: '.',
-                        onClick: () {},
+                        onClick: () {
+                          onButtonClick('.');
+                        },
                       ),
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            onButtonClick('=');
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: theme.colorScheme.primary,
                             foregroundColor: theme.colorScheme.onPrimary,
@@ -292,7 +363,9 @@ class KeyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          onClick();
+        },
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.all(25),
           textStyle: TextStyle(
