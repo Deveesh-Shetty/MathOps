@@ -11,17 +11,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => CalculatorState(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
-        ),
-        home: const MyHomePage(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
       ),
+      home: const MyHomePage(),
     );
   }
 }
@@ -33,25 +30,6 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class CalculatorState extends ChangeNotifier {
-  var result = 0;
-  var firstNumber = 0;
-  var secondNumber = 0;
-  String operator = '+';
-
-  // var query = firstNumber + operator + secondNumber;
-
-  void increment() {
-    result++;
-    notifyListeners();
-  }
-
-  void decrement() {
-    result--;
-    notifyListeners();
-  }
-}
-
 class Calculator extends StatefulWidget {
   const Calculator({super.key});
 
@@ -60,10 +38,35 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
-  var result = 0;
-  var firstNumber = 0;
-  var secondNumber = 0;
-  var operator = '+';
+  int result = 0;
+  int? firstNumber;
+  int? secondNumber;
+  String? operator;
+
+  void onButtonClick(var character) {
+    if (character.runtimeType == String) {
+      if (firstNumber == null) {
+        return;
+      }
+      return setState(() {
+        operator = character;
+      });
+    }
+
+    if (character.runtimeType == int) {
+      if (firstNumber == null) {
+        return setState(() {
+          firstNumber = character;
+        });
+      }
+      if (secondNumber == null) {
+        return setState(() {
+          secondNumber = character;
+        });
+      }
+      return;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,24 +80,41 @@ class _CalculatorState extends State<Calculator> {
           color: Color.fromRGBO(20, 20, 20, 1),
           width: width,
           height: height * 0.35,
-          alignment: Alignment.bottomRight,
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 2.0, horizontal: 20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  '$firstNumber $operator $secondNumber',
-                  style: TextStyle(
-                    color: Color.fromRGBO(255, 255, 255, 0.8),
-                    fontSize: 48,
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    (() {
+                      if (firstNumber == null) {
+                        return '';
+                      }
+                      if (operator == null) {
+                        return '$firstNumber';
+                      }
+                      if (secondNumber == null) {
+                        return '$firstNumber $operator';
+                      }
+                      return '$firstNumber $operator $secondNumber';
+                    })(),
+                    style: TextStyle(
+                      color: Color.fromRGBO(255, 255, 255, 0.8),
+                      fontSize: 48,
+                    ),
                   ),
                 ),
-                Text(
-                  '$result',
-                  style: TextStyle(
-                    color: Color.fromRGBO(255, 255, 255, 1),
-                    fontSize: 96,
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    '$result',
+                    style: TextStyle(
+                      color: Color.fromRGBO(255, 255, 255, 1),
+                      fontSize: 96,
+                    ),
                   ),
                 ),
               ],
@@ -102,8 +122,9 @@ class _CalculatorState extends State<Calculator> {
           ),
         ),
         Expanded(
-          child: Container(
+          child: SizedBox(
             width: width,
+            height: height * 0.65,
             child: Column(
               children: [
                 // Row 1
@@ -271,9 +292,7 @@ class KeyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ElevatedButton(
-        onPressed: () {
-          onClick();
-        },
+        onPressed: () {},
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.all(25),
           textStyle: TextStyle(
