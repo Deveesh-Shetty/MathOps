@@ -68,7 +68,6 @@ class _CalculatorState extends State<Calculator> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var calculatorState = context.watch<CalculatorState>();
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -113,19 +112,29 @@ class _CalculatorState extends State<Calculator> {
                   child: Row(
                     children: [
                       KeyButton(
-                        text: '1',
+                        text: 'C',
+                        onClick: () {},
+                      ),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(35),
+                            shape: CircleBorder(),
+                            elevation: 6,
+                            shadowColor: Color.fromRGBO(0, 0, 0, 1),
+                          ),
+                          child: Icon(
+                            Icons.backspace,
+                          ),
+                        ),
+                      ),
+                      KeyButton(
+                        text: '%',
                         onClick: () {},
                       ),
                       KeyButton(
-                        text: '2',
-                        onClick: () {},
-                      ),
-                      KeyButton(
-                        text: '3',
-                        onClick: () {},
-                      ),
-                      KeyButton(
-                        text: '+',
+                        text: '/',
                         onClick: () {},
                       ),
                     ],
@@ -138,19 +147,19 @@ class _CalculatorState extends State<Calculator> {
                   child: Row(
                     children: [
                       KeyButton(
-                        text: '1',
+                        text: '7',
                         onClick: () {},
                       ),
                       KeyButton(
-                        text: '2',
+                        text: '8',
                         onClick: () {},
                       ),
                       KeyButton(
-                        text: '3',
+                        text: '9',
                         onClick: () {},
                       ),
                       KeyButton(
-                        text: '+',
+                        text: 'x',
                         onClick: () {},
                       ),
                     ],
@@ -163,19 +172,19 @@ class _CalculatorState extends State<Calculator> {
                   child: Row(
                     children: [
                       KeyButton(
-                        text: '1',
+                        text: '4',
                         onClick: () {},
                       ),
                       KeyButton(
-                        text: '2',
+                        text: '5',
                         onClick: () {},
                       ),
                       KeyButton(
-                        text: '3',
+                        text: '6',
                         onClick: () {},
                       ),
                       KeyButton(
-                        text: '+',
+                        text: '-',
                         onClick: () {},
                       ),
                     ],
@@ -213,20 +222,33 @@ class _CalculatorState extends State<Calculator> {
                   child: Row(
                     children: [
                       KeyButton(
-                        text: '1',
+                        text: 'AC',
                         onClick: () {},
                       ),
                       KeyButton(
-                        text: '2',
+                        text: '0',
                         onClick: () {},
                       ),
                       KeyButton(
-                        text: '3',
+                        text: '.',
                         onClick: () {},
                       ),
-                      KeyButton(
-                        text: '+',
-                        onClick: () {},
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: theme.colorScheme.primary,
+                            foregroundColor: theme.colorScheme.onPrimary,
+                            padding: EdgeInsets.all(25),
+                            textStyle: TextStyle(
+                              fontSize: 35,
+                            ),
+                            shape: CircleBorder(),
+                            elevation: 6,
+                            shadowColor: Color.fromRGBO(0, 0, 0, 1),
+                          ),
+                          child: Text('='),
+                        ),
                       ),
                     ],
                   ),
@@ -247,7 +269,6 @@ class KeyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return Expanded(
       child: ElevatedButton(
         onPressed: () {
@@ -259,6 +280,8 @@ class KeyButton extends StatelessWidget {
             fontSize: 35,
           ),
           shape: CircleBorder(),
+          elevation: 6,
+          shadowColor: Color.fromRGBO(0, 0, 0, 1),
         ),
         child: Text(text),
       ),
