@@ -67,7 +67,6 @@ class _CalculatorState extends State<Calculator> {
         return;
       }
       return setState(() {
-        firstNumber = int.parse(__number!);
         operator = character;
       });
     }
@@ -76,13 +75,17 @@ class _CalculatorState extends State<Calculator> {
       if (operator == null) {
         return setState(() {
           __number = character.toString();
-          firstNumber = int.parse(__number!);
+          firstNumber = firstNumber == null
+              ? int.parse(__number!)
+              : (firstNumber! * 10) + int.parse(__number!);
         });
       }
-      if (firstNumber == null) {
+      if (firstNumber != null) {
         return setState(() {
           __number = character.toString();
-          secondNumber = int.parse(__number!);
+          secondNumber = secondNumber == null
+              ? int.parse(__number!)
+              : (secondNumber! * 10) + int.parse(__number!);
         });
       }
       return;
@@ -154,15 +157,13 @@ class _CalculatorState extends State<Calculator> {
                   child: Row(
                     children: [
                       KeyButton(
-                        text: 'C',
+                        text: 'AC',
                         onClick: () {
                           setState(() {
-                            if (firstNumber != null) {
-                              return firstNumber = null;
-                            }
-                            if (secondNumber != null) {
-                              return secondNumber = null;
-                            }
+                            result = 0.toDouble();
+                            firstNumber = null;
+                            secondNumber = null;
+                            operator = null;
                           });
                         },
                       ),
@@ -301,13 +302,15 @@ class _CalculatorState extends State<Calculator> {
                   child: Row(
                     children: [
                       KeyButton(
-                        text: 'AC',
+                        text: 'C',
                         onClick: () {
                           setState(() {
-                            result = 0.toDouble();
-                            firstNumber = null;
-                            secondNumber = null;
-                            operator = null;
+                            if (firstNumber != null) {
+                              return firstNumber = null;
+                            }
+                            if (secondNumber != null) {
+                              return secondNumber = null;
+                            }
                           });
                         },
                       ),
