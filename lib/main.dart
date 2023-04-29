@@ -104,12 +104,164 @@ class _CalculatorState extends State<Calculator> {
         ),
         Expanded(
           child: Container(
-            color: theme.colorScheme.primary,
             width: width,
-            child: Text('Hello'),
+            child: Column(
+              children: [
+                // Row 1
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    children: [
+                      KeyButton(
+                        text: '1',
+                        onClick: () {},
+                      ),
+                      KeyButton(
+                        text: '2',
+                        onClick: () {},
+                      ),
+                      KeyButton(
+                        text: '3',
+                        onClick: () {},
+                      ),
+                      KeyButton(
+                        text: '+',
+                        onClick: () {},
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Row 2
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    children: [
+                      KeyButton(
+                        text: '1',
+                        onClick: () {},
+                      ),
+                      KeyButton(
+                        text: '2',
+                        onClick: () {},
+                      ),
+                      KeyButton(
+                        text: '3',
+                        onClick: () {},
+                      ),
+                      KeyButton(
+                        text: '+',
+                        onClick: () {},
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Row 3
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    children: [
+                      KeyButton(
+                        text: '1',
+                        onClick: () {},
+                      ),
+                      KeyButton(
+                        text: '2',
+                        onClick: () {},
+                      ),
+                      KeyButton(
+                        text: '3',
+                        onClick: () {},
+                      ),
+                      KeyButton(
+                        text: '+',
+                        onClick: () {},
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Row 4
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    children: [
+                      KeyButton(
+                        text: '1',
+                        onClick: () {},
+                      ),
+                      KeyButton(
+                        text: '2',
+                        onClick: () {},
+                      ),
+                      KeyButton(
+                        text: '3',
+                        onClick: () {},
+                      ),
+                      KeyButton(
+                        text: '+',
+                        onClick: () {},
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Row 5
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    children: [
+                      KeyButton(
+                        text: '1',
+                        onClick: () {},
+                      ),
+                      KeyButton(
+                        text: '2',
+                        onClick: () {},
+                      ),
+                      KeyButton(
+                        text: '3',
+                        onClick: () {},
+                      ),
+                      KeyButton(
+                        text: '+',
+                        onClick: () {},
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         )
       ],
+    );
+  }
+}
+
+class KeyButton extends StatelessWidget {
+  final String text;
+  final Function onClick;
+  const KeyButton({super.key, required this.text, required this.onClick});
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    return Expanded(
+      child: ElevatedButton(
+        onPressed: () {
+          onClick();
+        },
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(25),
+          textStyle: TextStyle(
+            fontSize: 35,
+          ),
+          shape: CircleBorder(),
+        ),
+        child: Text(text),
+      ),
     );
   }
 }
