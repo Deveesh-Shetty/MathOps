@@ -37,6 +37,9 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
+  // __number stores the intermediate number if the user is
+  // entering multidigit number which he will....
+
   double result = 0.toDouble();
   int? firstNumber;
   String? __number;
@@ -62,6 +65,24 @@ class _CalculatorState extends State<Calculator> {
       });
     }
 
+    if (character == 'bksp') {
+      return setState(() {
+        if (firstNumber == null) {
+          return;
+        } else if (secondNumber == null) {
+          // Basically removing the last digit by dividing by 10
+          // and then removing the decimal by floor()
+          return setState(() {
+            firstNumber = (firstNumber! / 10).floor();
+          });
+        } else {
+          return setState(() {
+            secondNumber = (secondNumber! / 10).floor();
+          });
+        }
+      });
+    }
+
     if (character.runtimeType == String) {
       if (firstNumber == null) {
         return;
@@ -74,6 +95,8 @@ class _CalculatorState extends State<Calculator> {
     if (character.runtimeType == int) {
       if (operator == null) {
         return setState(() {
+          // If the user wants to enter multidigit then we are
+          // multipling the previous number with 10 and adding the new digit
           __number = character.toString();
           firstNumber = firstNumber == null
               ? int.parse(__number!)
@@ -169,7 +192,9 @@ class _CalculatorState extends State<Calculator> {
                       ),
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            onButtonClick('bksp');
+                          },
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.all(35),
                             shape: CircleBorder(),
