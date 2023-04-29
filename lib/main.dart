@@ -26,20 +26,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class CalculatorState extends ChangeNotifier {
-  var count = 0;
-
-  void increment() {
-    count++;
-    notifyListeners();
-  }
-
-  void decrement() {
-    count--;
-    notifyListeners();
-  }
-}
-
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -47,59 +33,89 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class Calculator extends StatelessWidget {
+class CalculatorState extends ChangeNotifier {
+  var result = 0;
+  var firstNumber = 0;
+  var secondNumber = 0;
+  String operator = '+';
+
+  // var query = firstNumber + operator + secondNumber;
+
+  void increment() {
+    result++;
+    notifyListeners();
+  }
+
+  void decrement() {
+    result--;
+    notifyListeners();
+  }
+}
+
+class Calculator extends StatefulWidget {
+  const Calculator({super.key});
+
+  @override
+  State<Calculator> createState() => _CalculatorState();
+}
+
+class _CalculatorState extends State<Calculator> {
+  var result = 0;
+  var firstNumber = 0;
+  var secondNumber = 0;
+  var operator = '+';
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var calculatorState = context.watch<CalculatorState>();
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Counter',
-            style: theme.textTheme.headlineLarge,
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    return Column(
+      children: [
+        Container(
+          color: Color.fromRGBO(20, 20, 20, 1),
+          width: width,
+          height: height * 0.35,
+          alignment: Alignment.bottomRight,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  '$firstNumber $operator $secondNumber',
+                  style: TextStyle(
+                    color: Color.fromRGBO(255, 255, 255, 0.8),
+                    fontSize: 48,
+                  ),
+                ),
+                Text(
+                  '$result',
+                  style: TextStyle(
+                    color: Color.fromRGBO(255, 255, 255, 1),
+                    fontSize: 96,
+                  ),
+                ),
+              ],
+            ),
           ),
-          Text(
-            '${calculatorState.count}',
-            style: theme.textTheme.headlineMedium,
+        ),
+        Expanded(
+          child: Container(
+            color: theme.colorScheme.primary,
+            width: width,
+            child: Text('Hello'),
           ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              MaterialButton(
-                onPressed: () {
-                  calculatorState.increment();
-                },
-                shape: CircleBorder(),
-                color: theme.colorScheme.primaryContainer,
-                textColor: theme.colorScheme.onPrimaryContainer,
-                padding: EdgeInsets.all(10),
-                child: Icon(Icons.add),
-              ),
-              MaterialButton(
-                onPressed: () {
-                  calculatorState.decrement();
-                },
-                shape: CircleBorder(),
-                color: theme.colorScheme.primaryContainer,
-                textColor: theme.colorScheme.onPrimaryContainer,
-                padding: EdgeInsets.all(10),
-                child: Icon(Icons.remove),
-              )
-            ],
-          )
-        ],
-      ),
+        )
+      ],
     );
   }
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int bottomNavigationIndex = 1;
+  int bottomNavigationIndex = 0;
 
   @override
   Widget build(BuildContext context) {
