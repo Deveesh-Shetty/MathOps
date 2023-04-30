@@ -1,6 +1,4 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -48,35 +46,41 @@ class _CalculatorState extends State<Calculator> {
   // entering multidigit number which he will....
 
   double result = 0.toDouble();
-  double? firstNumber;
+  String? firstNumber;
   String? __number;
-  double? secondNumber;
+  String? secondNumber;
   String? operator;
 
   int precision = 4;
   double buttonPadding = 25.0;
+
+  double? firstNumberVal;
+  double? secondNumberVal;
 
   void onButtonClick(var character) {
     if (character == '=') {
       setState(() {
         if (firstNumber == null || secondNumber == null) return;
 
+        double firstNumberVal = double.parse(firstNumber!);
+        double secondNumberVal = double.parse(secondNumber!);
+
         if (operator == '+') {
-          result = (firstNumber! + secondNumber!).toDouble();
+          result = firstNumberVal + secondNumberVal;
         } else if (operator == '-') {
-          result = (firstNumber! - secondNumber!).toDouble();
+          result = firstNumberVal - secondNumberVal;
         } else if (operator == 'x') {
-          result = (firstNumber! * secondNumber!).toDouble();
+          result = firstNumberVal * secondNumberVal;
         } else if (operator == '/') {
-          result = firstNumber! / secondNumber!;
+          result = firstNumberVal / secondNumberVal;
         } else if (operator == '%') {
-          result = (firstNumber! * secondNumber!) / 100;
+          result = (firstNumberVal * secondNumberVal) / 100;
         }
 
         setState(() {
           // Below statement means that we can continue the next operation
           // once user presses '=' by taking previous result as first number
-          firstNumber = result;
+          firstNumber = result.toString();
           operator = null;
           secondNumber = null;
         });
@@ -93,11 +97,11 @@ class _CalculatorState extends State<Calculator> {
           // Basically removing the last digit by dividing by 10
           // and then removing the decimal by floor()
           return setState(() {
-            firstNumber = (firstNumber! / 10).floor().toDouble();
+            firstNumber = (double.parse(firstNumber!) / 10).floor().toString();
           });
         } else {
           return setState(() {
-            secondNumber = (secondNumber! / 10).floor().toDouble();
+            firstNumber = (double.parse(secondNumber!) / 10).floor().toString();
           });
         }
       });
@@ -108,7 +112,7 @@ class _CalculatorState extends State<Calculator> {
     if (character == '.') {
       if (firstNumber == null) return;
       return setState(() {
-        firstNumber = double.parse('${firstNumber!.toStringAsFixed(0)}.');
+        firstNumber = '$firstNumber.';
         print('$firstNumber');
       });
     }
@@ -131,17 +135,15 @@ class _CalculatorState extends State<Calculator> {
           // If the user wants to enter multidigit then we are
           // multipling the previous number with 10 and adding the new digit
           __number = character.toString();
-          firstNumber = firstNumber == null
-              ? double.parse(__number!)
-              : (firstNumber! * 10) + double.parse(__number!);
+          firstNumber =
+              firstNumber == null ? __number : '$firstNumber$__number';
         });
       }
       if (firstNumber != null) {
         return setState(() {
           __number = character.toString();
-          secondNumber = secondNumber == null
-              ? double.parse(__number!)
-              : (secondNumber! * 10) + double.parse(__number!);
+          secondNumber =
+              secondNumber == null ? __number : '$secondNumber$__number';
         });
       }
       return;
