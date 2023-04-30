@@ -45,17 +45,20 @@ class _CalculatorState extends State<Calculator> {
   // __number stores the intermediate number if the user is
   // entering multidigit number which he will....
 
-  double result = 0.toDouble();
+  String result = '0';
   String? firstNumber;
   String? __number;
   String? secondNumber;
   String? operator;
 
-  int precision = 4;
-  double buttonPadding = 25.0;
-
   double? firstNumberVal;
   double? secondNumberVal;
+  double? resultVal;
+
+  bool firstNumberHasDecimal = false;
+  bool secondNumberHasDecimal = false;
+
+  int precision = 4;
 
   void onButtonClick(var character) {
     if (character == '=') {
@@ -66,21 +69,21 @@ class _CalculatorState extends State<Calculator> {
         double secondNumberVal = double.parse(secondNumber!);
 
         if (operator == '+') {
-          result = firstNumberVal + secondNumberVal;
+          resultVal = firstNumberVal + secondNumberVal;
         } else if (operator == '-') {
-          result = firstNumberVal - secondNumberVal;
+          resultVal = firstNumberVal - secondNumberVal;
         } else if (operator == 'x') {
-          result = firstNumberVal * secondNumberVal;
+          resultVal = firstNumberVal * secondNumberVal;
         } else if (operator == '/') {
-          result = firstNumberVal / secondNumberVal;
+          resultVal = firstNumberVal / secondNumberVal;
         } else if (operator == '%') {
-          result = (firstNumberVal * secondNumberVal) / 100;
+          resultVal = (firstNumberVal * secondNumberVal) / 100;
         }
 
         setState(() {
           // Below statement means that we can continue the next operation
           // once user presses '=' by taking previous result as first number
-          firstNumber = result.toString();
+          firstNumber = resultVal.toString();
           operator = null;
           secondNumber = null;
         });
@@ -98,38 +101,45 @@ class _CalculatorState extends State<Calculator> {
           // and then removing the decimal by floor()
           return setState(() {
             firstNumber = (double.parse(firstNumber!) / 10).floor().toString();
+            // If we delete all the numbers it shld show preceeding 0
+            if (firstNumber == '0') firstNumber = null;
           });
         } else {
           return setState(() {
-            firstNumber = (double.parse(secondNumber!) / 10).floor().toString();
+            secondNumber =
+                (double.parse(secondNumber!) / 10).floor().toString();
+            if (secondNumber == '0') secondNumber = null;
           });
         }
       });
     }
 
-    // TODO: Add Decimal point use
-    // Have to convert first and second number to double
     if (character == '.') {
       if (firstNumber == null) return;
       return setState(() {
-        firstNumber = '$firstNumber.';
-        print('$firstNumber');
+        if (operator == null && !firstNumberHasDecimal) {
+          firstNumberHasDecimal = true;
+          firstNumber = '$firstNumber.';
+          return;
+        }
+        if (operator != null && !secondNumberHasDecimal) {
+          secondNumberHasDecimal = true;
+          secondNumber = '$secondNumber.';
+        }
+        return;
       });
     }
 
     if (character.runtimeType == String) {
       if (character == '.') return;
+      if (firstNumber == null) return;
 
-      if (firstNumber == null) {
-        return;
-      }
       return setState(() {
         operator = character;
       });
     }
 
     if (character.runtimeType == int) {
-      character = character.toDouble();
       if (operator == null) {
         return setState(() {
           // If the user wants to enter multidigit then we are
@@ -194,10 +204,15 @@ class _CalculatorState extends State<Calculator> {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Text(
+                      // If the result is null then 0 else
                       // If the result has .0 then remove it else print
-                      // with precision which is mention
-                      result.toStringAsFixed(
-                          result.truncateToDouble() == result ? 0 : precision),
+                      // with precision which is mentioned
+                      resultVal == null
+                          ? '0'
+                          : resultVal!.toStringAsFixed(
+                              resultVal!.truncateToDouble() == resultVal
+                                  ? 0
+                                  : precision),
                       style: TextStyle(
                         color: Color.fromRGBO(255, 255, 255, 1),
                         fontSize: 96,
@@ -224,10 +239,13 @@ class _CalculatorState extends State<Calculator> {
                         text: 'AC',
                         onClick: () {
                           setState(() {
-                            result = 0.toDouble();
+                            result = '0';
+                            resultVal = 0.0;
                             firstNumber = null;
                             secondNumber = null;
                             operator = null;
+                            firstNumberHasDecimal = false;
+                            secondNumberHasDecimal = false;
                           });
                         },
                       ),
@@ -372,10 +390,14 @@ class _CalculatorState extends State<Calculator> {
                         onClick: () {
                           setState(() {
                             if (firstNumber != null) {
-                              return firstNumber = null;
+                              firstNumber = null;
+                              firstNumberHasDecimal = false;
+                              return;
                             }
                             if (secondNumber != null) {
-                              return secondNumber = null;
+                              secondNumber = null;
+                              secondNumberHasDecimal = false;
+                              return;
                             }
                           });
                         },
