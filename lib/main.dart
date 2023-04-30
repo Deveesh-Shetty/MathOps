@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,19 +38,27 @@ class Calculator extends StatefulWidget {
   State<Calculator> createState() => _CalculatorState();
 }
 
+class Conversion extends StatefulWidget {
+  const Conversion({super.key});
+  State<StatefulWidget> createState() => _ConversionState();
+}
+
 class _CalculatorState extends State<Calculator> {
   // __number stores the intermediate number if the user is
   // entering multidigit number which he will....
 
   double result = 0.toDouble();
-  int? firstNumber;
+  double? firstNumber;
   String? __number;
-  int? secondNumber;
+  double? secondNumber;
   String? operator;
+
+  int precision = 4;
+  double buttonPadding = 25.0;
 
   void onButtonClick(var character) {
     if (character == '=') {
-      return setState(() {
+      setState(() {
         if (firstNumber == null || secondNumber == null) return;
 
         if (operator == '+') {
@@ -64,15 +74,15 @@ class _CalculatorState extends State<Calculator> {
         }
 
         setState(() {
-          // TODO: convert the first and second number to double;
           // Below statement means that we can continue the next operation
           // once user presses '=' by taking previous result as first number
-          // firstNumber = result
-          firstNumber = null;
+          firstNumber = result;
           operator = null;
           secondNumber = null;
         });
       });
+
+      return;
     }
 
     if (character == 'bksp') {
@@ -83,17 +93,29 @@ class _CalculatorState extends State<Calculator> {
           // Basically removing the last digit by dividing by 10
           // and then removing the decimal by floor()
           return setState(() {
-            firstNumber = (firstNumber! / 10).floor();
+            firstNumber = (firstNumber! / 10).floor().toDouble();
           });
         } else {
           return setState(() {
-            secondNumber = (secondNumber! / 10).floor();
+            secondNumber = (secondNumber! / 10).floor().toDouble();
           });
         }
       });
     }
 
+    // TODO: Add Decimal point use
+    // Have to convert first and second number to double
+    if (character == '.') {
+      if (firstNumber == null) return;
+      return setState(() {
+        firstNumber = double.parse('${firstNumber!.toStringAsFixed(0)}.');
+        print('$firstNumber');
+      });
+    }
+
     if (character.runtimeType == String) {
+      if (character == '.') return;
+
       if (firstNumber == null) {
         return;
       }
@@ -103,22 +125,23 @@ class _CalculatorState extends State<Calculator> {
     }
 
     if (character.runtimeType == int) {
+      character = character.toDouble();
       if (operator == null) {
         return setState(() {
           // If the user wants to enter multidigit then we are
           // multipling the previous number with 10 and adding the new digit
           __number = character.toString();
           firstNumber = firstNumber == null
-              ? int.parse(__number!)
-              : (firstNumber! * 10) + int.parse(__number!);
+              ? double.parse(__number!)
+              : (firstNumber! * 10) + double.parse(__number!);
         });
       }
       if (firstNumber != null) {
         return setState(() {
           __number = character.toString();
           secondNumber = secondNumber == null
-              ? int.parse(__number!)
-              : (secondNumber! * 10) + int.parse(__number!);
+              ? double.parse(__number!)
+              : (secondNumber! * 10) + double.parse(__number!);
         });
       }
       return;
@@ -169,7 +192,10 @@ class _CalculatorState extends State<Calculator> {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Text(
-                      '${result}',
+                      // If the result has .0 then remove it else print
+                      // with precision which is mention
+                      result.toStringAsFixed(
+                          result.truncateToDouble() == result ? 0 : precision),
                       style: TextStyle(
                         color: Color.fromRGBO(255, 255, 255, 1),
                         fontSize: 96,
@@ -395,6 +421,40 @@ class _CalculatorState extends State<Calculator> {
   }
 }
 
+class _ConversionState extends State<Conversion> {
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Hello'),
+      ),
+      drawer: Drawer(
+        child: Text('land'),
+      ),
+      drawerScrimColor: Color.fromRGBO(0, 0, 0, 0.5),
+      persistentFooterButtons: [
+        ElevatedButton(
+          onPressed: () {},
+          child: Text('Hello'),
+        ),
+        ElevatedButton(
+          onPressed: () {},
+          child: Text('Hello'),
+        ),
+        ElevatedButton(
+          onPressed: () {},
+          child: Text('Hello'),
+        ),
+        ElevatedButton(
+          onPressed: () {},
+          child: Text('Hello'),
+        )
+      ],
+    );
+  }
+}
+
 class KeyButton extends StatelessWidget {
   final String text;
   final Function onClick;
@@ -437,7 +497,7 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
       case 1:
         // Converter();
-        page = Placeholder();
+        page = Conversion();
         break;
       default:
         throw UnimplementedError('No widget for $bottomNavigationIndex');
