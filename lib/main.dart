@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,6 +39,8 @@ class Calculator extends StatefulWidget {
 
 class Conversion extends StatefulWidget {
   const Conversion({super.key});
+
+  @override
   State<StatefulWidget> createState() => _ConversionState();
 }
 
@@ -451,30 +454,67 @@ class _ConversionState extends State<Conversion> {
     var theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hello'),
+        backgroundColor: theme.colorScheme.primary,
+        foregroundColor: theme.colorScheme.onPrimary,
+        title: Text('Converter'),
       ),
       drawer: Drawer(
-        child: Text('land'),
-      ),
+          child: ListView(
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primary,
+            ),
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.scaleUnbalanced,
+                    color: theme.colorScheme.onPrimary,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'Converter',
+                    style: TextStyle(
+                      color: theme.colorScheme.onPrimary,
+                      fontSize: 30,
+                    ),
+                  ),
+                ]),
+          ),
+          ListTile(
+            leading: FaIcon(FontAwesomeIcons.weightHanging),
+            title: Text('Weight'),
+          ),
+          ListTile(
+            leading: FaIcon(FontAwesomeIcons.glassWaterDroplet),
+            title: Text('Volume'),
+          ),
+          ListTile(
+            leading: FaIcon(FontAwesomeIcons.creativeCommonsZero),
+            title: Text('Numeral System'),
+          ),
+          ListTile(
+            leading: FaIcon(FontAwesomeIcons.weightScale),
+            title: Text('BMI'),
+          ),
+          ListTile(
+            leading: FaIcon(FontAwesomeIcons.memory),
+            title: Text('Memory'),
+          ),
+          AboutListTile(
+            applicationName: 'CalConverter',
+            icon: Icon(Icons.info),
+            applicationIcon: FaIcon(FontAwesomeIcons.calculator),
+            applicationVersion: '1.0.0',
+            applicationLegalese: '© 2023 Deveesh Shetty',
+          )
+        ],
+      )),
       drawerScrimColor: Color.fromRGBO(0, 0, 0, 0.5),
-      persistentFooterButtons: [
-        ElevatedButton(
-          onPressed: () {},
-          child: Text('Hello'),
-        ),
-        ElevatedButton(
-          onPressed: () {},
-          child: Text('Hello'),
-        ),
-        ElevatedButton(
-          onPressed: () {},
-          child: Text('Hello'),
-        ),
-        ElevatedButton(
-          onPressed: () {},
-          child: Text('Hello'),
-        )
-      ],
     );
   }
 }
@@ -507,7 +547,7 @@ class KeyButton extends StatelessWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int bottomNavigationIndex = 0;
+  int bottomNavigationIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -531,11 +571,11 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.calculate),
+            icon: FaIcon(FontAwesomeIcons.calculator),
             label: 'Calculator',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.scale),
+            icon: FaIcon(FontAwesomeIcons.scaleBalanced),
             label: 'Conversion',
           ),
         ],
