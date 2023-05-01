@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const MyApp());
@@ -458,34 +459,34 @@ class _ConversionState extends State<Conversion> {
         foregroundColor: theme.colorScheme.onPrimary,
         title: Text('Converter'),
       ),
-      drawer: Drawer(
-          child: ListView(
+      drawer: NavigationDrawer(
         children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: theme.colorScheme.primary,
+          UserAccountsDrawerHeader(
+            accountEmail: Text('deveeshshetty@gmail.com'),
+            accountName: Text('Deveesh Shetty'),
+            currentAccountPicture: ClipOval(
+              child: Image.asset(
+                'assets/images/Deveesh-Shetty.jpg',
+              ),
             ),
-            child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FaIcon(
-                    FontAwesomeIcons.scaleUnbalanced,
-                    color: theme.colorScheme.onPrimary,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    'Converter',
-                    style: TextStyle(
-                      color: theme.colorScheme.onPrimary,
-                      fontSize: 30,
-                    ),
-                  ),
-                ]),
+            otherAccountsPictures: [
+              FaIcon(
+                FontAwesomeIcons.github,
+                color: theme.colorScheme.onPrimary,
+              ),
+              FaIcon(
+                FontAwesomeIcons.linkedin,
+                color: theme.colorScheme.onPrimary,
+              ),
+              FaIcon(
+                FontAwesomeIcons.twitter,
+                color: theme.colorScheme.onPrimary,
+              ),
+            ],
+            otherAccountsPicturesSize: Size(24, 24),
           ),
           ListTile(
+            hoverColor: theme.colorScheme.background,
             leading: FaIcon(FontAwesomeIcons.weightHanging),
             title: Text('Weight'),
           ),
@@ -505,15 +506,20 @@ class _ConversionState extends State<Conversion> {
             leading: FaIcon(FontAwesomeIcons.memory),
             title: Text('Memory'),
           ),
-          AboutListTile(
-            applicationName: 'CalConverter',
-            icon: Icon(Icons.info),
-            applicationIcon: FaIcon(FontAwesomeIcons.calculator),
-            applicationVersion: '1.0.0',
-            applicationLegalese: '© 2023 Deveesh Shetty',
-          )
+          Expanded(
+            child: Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: AboutListTile(
+                applicationName: 'CalConverter',
+                icon: Icon(Icons.info),
+                applicationIcon: FaIcon(FontAwesomeIcons.calculator),
+                applicationVersion: '1.0.0',
+                applicationLegalese: '© 2023 Deveesh Shetty',
+              ),
+            ),
+          ),
         ],
-      )),
+      ),
       drawerScrimColor: Color.fromRGBO(0, 0, 0, 0.5),
     );
   }
