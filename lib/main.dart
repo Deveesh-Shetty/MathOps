@@ -470,18 +470,18 @@ class _ConversionState extends State<Conversion> {
               ),
             ),
             otherAccountsPictures: [
-              FaIcon(
-                FontAwesomeIcons.github,
-                color: theme.colorScheme.onPrimary,
-              ),
-              FaIcon(
-                FontAwesomeIcons.linkedin,
-                color: theme.colorScheme.onPrimary,
-              ),
-              FaIcon(
-                FontAwesomeIcons.twitter,
-                color: theme.colorScheme.onPrimary,
-              ),
+              SocialsIcon(
+                  theme: theme,
+                  url: 'https://github.com/Deveesh-Shetty',
+                  icon: FontAwesomeIcons.github),
+              SocialsIcon(
+                  theme: theme,
+                  url: 'https://www.linkedin.com/in/deveesh-shetty-908539214',
+                  icon: FontAwesomeIcons.linkedin),
+              SocialsIcon(
+                  theme: theme,
+                  url: 'https://twitter.com/shettydeveesh',
+                  icon: FontAwesomeIcons.twitter),
             ],
             otherAccountsPicturesSize: Size(24, 24),
           ),
@@ -521,6 +521,41 @@ class _ConversionState extends State<Conversion> {
         ],
       ),
       drawerScrimColor: Color.fromRGBO(0, 0, 0, 0.5),
+    );
+  }
+}
+
+class SocialsIcon extends StatelessWidget {
+  const SocialsIcon({
+    super.key,
+    required this.theme,
+    required this.url,
+    required this.icon,
+  });
+
+  final String url;
+  final IconData icon;
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () async {
+          final parsedUrl = Uri.parse(url);
+          if (await canLaunchUrl(parsedUrl)) {
+            await launchUrl(parsedUrl);
+          } else {
+            throw "Couldn't launch $parsedUrl";
+          }
+          print('Hello');
+        },
+        child: FaIcon(
+          icon,
+          color: theme.colorScheme.onPrimary,
+        ),
+      ),
     );
   }
 }
