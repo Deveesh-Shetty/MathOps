@@ -450,6 +450,8 @@ class _CalculatorState extends State<Calculator> {
 }
 
 class _ConversionState extends State<Conversion> {
+  int selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -460,6 +462,7 @@ class _ConversionState extends State<Conversion> {
         title: Text('Converter'),
       ),
       drawer: NavigationDrawer(
+        selectedIndex: selectedIndex,
         children: [
           UserAccountsDrawerHeader(
             accountEmail: Text('deveeshshetty@gmail.com'),
@@ -486,37 +489,51 @@ class _ConversionState extends State<Conversion> {
             otherAccountsPicturesSize: Size(24, 24),
           ),
           ListTile(
-            hoverColor: theme.colorScheme.background,
+            onTap: () => setState(() {
+              selectedIndex = 0;
+            }),
             leading: FaIcon(FontAwesomeIcons.weightHanging),
+            selected: selectedIndex == 0,
             title: Text('Weight'),
           ),
           ListTile(
+            onTap: () => setState(() {
+              selectedIndex = 1;
+            }),
+            selected: selectedIndex == 1,
             leading: FaIcon(FontAwesomeIcons.glassWaterDroplet),
             title: Text('Volume'),
           ),
           ListTile(
-            leading: FaIcon(FontAwesomeIcons.creativeCommonsZero),
-            title: Text('Numeral System'),
-          ),
-          ListTile(
+            onTap: () => setState(() {
+              selectedIndex = 2;
+            }),
+            selected: selectedIndex == 2,
             leading: FaIcon(FontAwesomeIcons.weightScale),
             title: Text('BMI'),
           ),
           ListTile(
+            onTap: () => setState(() {
+              selectedIndex = 3;
+            }),
+            selected: selectedIndex == 3,
+            leading: FaIcon(FontAwesomeIcons.creativeCommonsZero),
+            title: Text('Numeral System'),
+          ),
+          ListTile(
+            onTap: () => setState(() {
+              selectedIndex = 4;
+            }),
+            selected: selectedIndex == 4,
             leading: FaIcon(FontAwesomeIcons.memory),
             title: Text('Memory'),
           ),
-          Expanded(
-            child: Align(
-              alignment: FractionalOffset.bottomCenter,
-              child: AboutListTile(
-                applicationName: 'CalConverter',
-                icon: Icon(Icons.info),
-                applicationIcon: FaIcon(FontAwesomeIcons.calculator),
-                applicationVersion: '1.0.0',
-                applicationLegalese: '© 2023 Deveesh Shetty',
-              ),
-            ),
+          AboutListTile(
+            applicationName: 'CalConverter',
+            icon: Icon(Icons.info),
+            applicationIcon: FaIcon(FontAwesomeIcons.calculator),
+            applicationVersion: '1.0.0',
+            applicationLegalese: '© 2023 Deveesh Shetty',
           ),
         ],
       ),
