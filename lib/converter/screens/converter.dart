@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:calculator/converter/widgets/socials_icon.dart';
+import 'package:calculator/converter/widgets/Converters/weight_converter.dart';
 
 class Conversion extends StatefulWidget {
   const Conversion({super.key});
@@ -13,8 +14,34 @@ class _ConversionState extends State<Conversion> {
   int selectedIndex = 0;
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    Widget page;
+    switch (selectedIndex) {
+      case 0:
+        page = WeightConverterState();
+        break;
+      case 1:
+        page = Placeholder();
+        break;
+      case 2:
+        page = Placeholder();
+        break;
+      case 3:
+        page = Placeholder();
+        break;
+      case 4:
+        page = Placeholder();
+        break;
+      default:
+        throw UnimplementedError('No widget for $selectedIndex');
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
@@ -98,6 +125,7 @@ class _ConversionState extends State<Conversion> {
         ],
       ),
       drawerScrimColor: Color.fromRGBO(0, 0, 0, 0.5),
+      body: Container(child: page),
     );
   }
 }

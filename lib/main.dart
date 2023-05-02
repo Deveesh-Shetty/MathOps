@@ -36,6 +36,11 @@ class _MyHomePageState extends State<MyHomePage> {
   int bottomNavigationIndex = 1;
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
 
@@ -50,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = Conversion();
         break;
       default:
-        throw UnimplementedError('No widget for $bottomNavigationIndex');
+        throw UnimplementedError('No page for $bottomNavigationIndex');
     }
 
     return Scaffold(

@@ -27,6 +27,11 @@ class _CalculatorState extends State<Calculator> {
 
   int precision = 4;
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void onButtonClick(var character) {
     if (character == '=') {
       setState(() {
