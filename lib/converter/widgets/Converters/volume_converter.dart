@@ -3,30 +3,31 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:calculator/converter/widgets/text_and_dropdown.dart';
 import 'package:calculator/converter/lib/converter_function.dart';
 
-class WeightConverterState extends StatefulWidget {
-  const WeightConverterState({super.key});
+class VolumeConverterState extends StatefulWidget {
+  const VolumeConverterState({super.key});
 
   @override
-  State<StatefulWidget> createState() => _WeightConverter();
+  State<StatefulWidget> createState() => _VolumeConverter();
 }
 
-class _WeightConverter extends State<WeightConverterState> {
+class _VolumeConverter extends State<VolumeConverterState> {
   final List<String> weighingUnitsList = [
-    'Pound (lbs)',
-    'Kilogram (kg)',
-    'Gram (g)',
-    'Tonne (t)'
+    'Litre (l)',
+    'millilitre (ml)',
+    'cubic meter (m3)',
+    'cubic centimeter (cm3)',
+    'gallon (g)'
   ];
 
   // Taking Kilogram in reference
-  String referenceUnit = 'Kilogram (kg)';
+  String referenceUnit = 'Litre (l)';
 
   final TextEditingController fromTextController = TextEditingController();
   final TextEditingController toTextController = TextEditingController();
 
   // Default Values
-  String fromDropdownValue = 'Pound (lbs)';
-  String toDropdownValue = 'Kilogram (kg)';
+  String fromDropdownValue = 'gallon (g)';
+  String toDropdownValue = 'Litre (l)';
 
   @override
   void dispose() {
@@ -49,9 +50,9 @@ class _WeightConverter extends State<WeightConverterState> {
                 textController: fromTextController,
                 dropDownValue: fromDropdownValue,
                 inputDecoration: InputDecoration(
-                  hintText: 'Enter the weight',
-                  label: Text('Weight'),
-                  icon: FaIcon(FontAwesomeIcons.weightHanging),
+                  hintText: 'Enter the volume',
+                  label: Text('Volume'),
+                  icon: FaIcon(FontAwesomeIcons.water),
                 ),
                 list: weighingUnitsList,
                 onChange: (newValue) {
@@ -69,8 +70,8 @@ class _WeightConverter extends State<WeightConverterState> {
                 textController: toTextController,
                 dropDownValue: toDropdownValue,
                 inputDecoration: InputDecoration(
-                  label: Text('Weight'),
-                  icon: FaIcon(FontAwesomeIcons.weightHanging),
+                  label: Text('Volume'),
+                  icon: FaIcon(FontAwesomeIcons.water),
                 ),
                 list: weighingUnitsList,
                 onChange: (newValue) {

@@ -13,6 +13,16 @@ double unitConversionValue(String unit) {
       return TONNE_TO_KILO;
 
     // For Volume Converter
+    case 'Litre (l)':
+      return LITRE_TO_LITRE;
+    case 'millilitre (ml)':
+      return MILILITRE_TO_LITRE;
+    case 'cubic meter (m3)':
+      return CUBICMETER_TO_LITRE;
+    case 'cubic centimeter (cm3)':
+      return CUBICCENTIMETER_TO_LITRE;
+    case 'gallon (g)':
+      return GALLON_TO_LITRE;
 
     default:
       return -1;
