@@ -42,6 +42,12 @@ class _ConversionState extends State<Conversion> {
       case 4:
         page = MemoryConverterState();
         break;
+      case 5:
+        page = Placeholder();
+        break;
+      case 6:
+        page = Placeholder();
+        break;
       default:
         throw UnimplementedError('No widget for $selectedIndex');
     }
@@ -100,16 +106,16 @@ class _ConversionState extends State<Conversion> {
               selectedIndex = 2;
             }),
             selected: selectedIndex == 2,
-            leading: FaIcon(FontAwesomeIcons.weightScale),
-            title: Text('BMI'),
+            leading: FaIcon(FontAwesomeIcons.ruler),
+            title: Text('Length'),
           ),
           ListTile(
             onTap: () => setState(() {
               selectedIndex = 3;
             }),
             selected: selectedIndex == 3,
-            leading: FaIcon(FontAwesomeIcons.creativeCommonsZero),
-            title: Text('Numeral System'),
+            leading: FaIcon(FontAwesomeIcons.temperatureHigh),
+            title: Text('Temperature'),
           ),
           ListTile(
             onTap: () => setState(() {
@@ -118,6 +124,22 @@ class _ConversionState extends State<Conversion> {
             selected: selectedIndex == 4,
             leading: FaIcon(FontAwesomeIcons.memory),
             title: Text('Memory'),
+          ),
+          ListTile(
+            onTap: () => setState(() {
+              selectedIndex = 5;
+            }),
+            selected: selectedIndex == 5,
+            leading: FaIcon(FontAwesomeIcons.creativeCommonsZero),
+            title: Text('Numeral System'),
+          ),
+          ListTile(
+            onTap: () => setState(() {
+              selectedIndex = 6;
+            }),
+            selected: selectedIndex == 6,
+            leading: FaIcon(FontAwesomeIcons.weightScale),
+            title: Text('BMI'),
           ),
           AboutListTile(
             applicationName: 'CalConverter',
