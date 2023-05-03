@@ -31,7 +31,10 @@ class TextAndDropDownRow extends StatelessWidget {
             controller: textController,
             autofocus: true,
             keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            inputFormatters: [
+              // Allowing only numbers and decimal places upto 6 terms after decimal
+              FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,6}'))
+            ],
             decoration: inputDecoration,
             onSubmitted: (String value) {
               print('The text is $value');
