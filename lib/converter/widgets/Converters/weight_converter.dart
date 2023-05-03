@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:calculator/converter/widgets/text_and_dropdown.dart';
 
 class WeightConverterState extends StatefulWidget {
   const WeightConverterState({super.key});
@@ -10,12 +10,31 @@ class WeightConverterState extends StatefulWidget {
 }
 
 class _WeightConverter extends State<WeightConverterState> {
-  final textController = TextEditingController();
-  String dropDownValue = 'Option 1';
+  final List<String> weighingUnitsList = [
+    'Pound (lbs)',
+    'Kilogram (kg)',
+    'Gram (g)',
+    'Tonne (t)'
+  ];
+
+  final TextEditingController fromTextController = TextEditingController();
+  final TextEditingController toTextController = TextEditingController();
+
+  String fromDropdownValue = 'Pound (lbs)';
+  String toDropdownValue = 'Kilogram (kg)';
+
+  void convertUnit(
+    double fromValue,
+    String fromUnit,
+    String toUnit,
+  ) {
+    print('$fromValue $fromUnit to $toUnit');
+  }
 
   @override
   void dispose() {
-    textController.dispose();
+    fromTextController.dispose();
+    toTextController.dispose();
     super.dispose();
   }
 
@@ -27,55 +46,58 @@ class _WeightConverter extends State<WeightConverterState> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: textController,
-                    autofocus: true,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    decoration: InputDecoration(
-                      hintText: 'Enter the weight',
-                      label: Text('Weight'),
-                      icon: FaIcon(FontAwesomeIcons.weightHanging),
-                    ),
-                    onSubmitted: (String value) {
-                      print('The text is $value');
-                    },
-                  ),
-                ),
-                SizedBox(
-                  width: 16,
-                ),
-                DropdownButton(
-                  value: dropDownValue,
-                  underline: Container(),
-                  items: ['Option 1', 'Option 2', 'Option 3', 'Option 4']
-                      .map((String value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Text(value),
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      dropDownValue = newValue!;
-                    });
-                  },
-                ),
-              ],
+            TextAndDropDownRow(
+              textController: fromTextController,
+              dropDownValue: fromDropdownValue,
+              inputDecoration: InputDecoration(
+                hintText: 'Enter the weight',
+                label: Text('Weight'),
+                icon: FaIcon(FontAwesomeIcons.weightHanging),
+              ),
+              list: weighingUnitsList,
+              onChange: (newValue) {
+                setState(() {
+                  fromDropdownValue = newValue!;
+                });
+              },
+              isResult: false,
+            ),
+            SizedBox(
+              height: 32,
+            ),
+            FaIcon(FontAwesomeIcons.arrowDownLong),
+            TextAndDropDownRow(
+              textController: toTextController,
+              dropDownValue: toDropdownValue,
+              inputDecoration: InputDecoration(
+                hintText: 'Enter the weight',
+                label: Text('Weight'),
+                icon: FaIcon(FontAwesomeIcons.weightHanging),
+              ),
+              list: weighingUnitsList,
+              onChange: (newValue) {
+                setState(() {
+                  toDropdownValue = newValue!;
+                });
+              },
+              isResult: true,
             ),
             SizedBox(
               height: 16,
             ),
             TextButton(
               onPressed: () {
-                print(textController.text);
+                print(fromTextController.text);
+                print(fromDropdownValue);
+
+                print(toTextController.text);
+                print(toDropdownValue);
+
+                convertUnit(
+                  double.parse(fromTextController.text),
+                  fromDropdownValue,
+                  toDropdownValue,
+                );
               },
               child: Padding(
                 padding:
