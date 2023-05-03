@@ -24,6 +24,24 @@ double unitConversionValue(String unit) {
     case 'gallon (g)':
       return GALLON_TO_LITRE;
 
+    // For Memory Converter
+    case 'PetaByte (PB)':
+      return PB_TO_MB;
+    case 'TeraByte (TB)':
+      return TB_TO_MB;
+    case 'GigaByte (GB)':
+      return GB_TO_MB;
+    case 'MegaByte (MB)':
+      return MB_TO_MB;
+    case 'KiloByte (KB)':
+      return KB_TO_MB;
+    case 'Byte (B)':
+      return BYTE_TO_MB;
+    case 'Nibble (n)':
+      return NIBBLE_TO_MB;
+    case 'Bit (b)':
+      return BIT_TO_MB;
+
     default:
       return -1;
   }

@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:calculator/converter/widgets/socials_icon.dart';
 import 'package:calculator/converter/widgets/Converters/weight_converter.dart';
 import 'package:calculator/converter/widgets/Converters/volume_converter.dart';
+import 'package:calculator/converter/widgets/Converters/memory_converter.dart';
 
 class Conversion extends StatefulWidget {
   const Conversion({super.key});
@@ -39,7 +40,7 @@ class _ConversionState extends State<Conversion> {
         page = Placeholder();
         break;
       case 4:
-        page = Placeholder();
+        page = MemoryConverterState();
         break;
       default:
         throw UnimplementedError('No widget for $selectedIndex');
