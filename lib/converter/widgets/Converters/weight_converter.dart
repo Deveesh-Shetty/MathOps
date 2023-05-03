@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:calculator/converter/widgets/text_and_dropdown.dart';
-import 'package:calculator/converter/constants/weight.dart';
+import 'package:calculator/converter/lib/conveter_function.dart';
 
 class WeightConverterState extends StatefulWidget {
   const WeightConverterState({super.key});
@@ -18,54 +18,15 @@ class _WeightConverter extends State<WeightConverterState> {
     'Tonne (t)'
   ];
 
+  // Taking Kilogram in reference
+  String referenceUnit = 'Kilogram (kg)';
+
   final TextEditingController fromTextController = TextEditingController();
   final TextEditingController toTextController = TextEditingController();
 
+  // Default Values
   String fromDropdownValue = 'Pound (lbs)';
   String toDropdownValue = 'Kilogram (kg)';
-
-  double unitConversionValue(String unit) {
-    switch (unit) {
-      case 'Pound (lbs)':
-        return POUND_TO_KILO;
-      case 'Kilogram (kg)':
-        return KILO_TO_KILO;
-      case 'Gram (g)':
-        return GRAM_TO_KILO;
-      case 'Tonne (t)':
-        return TONNE_TO_KILO;
-      default:
-        return -1;
-    }
-  }
-
-  void convertUnit(
-    double fromValue,
-    String fromUnit,
-    String toUnit,
-  ) {
-    // If both the units are same
-    if (fromUnit == toUnit) {
-      toTextController.text = fromValue.toString();
-      return;
-    }
-
-    // Converting the fromValue to Standard Kilogram to ease the conversion
-    double fromUnitInKilo = fromValue * unitConversionValue(fromUnit);
-
-    // If the toUnit is Kilogram then return that only
-    if (toUnit == 'Kilogram (kg)') {
-      toTextController.text = fromUnitInKilo.toString();
-      return;
-    }
-
-    // If it is something other than Kilogram
-    // Basically first it gets the conversion value then it divides
-    // the conversion value with the fromUnitInKilo which is calculated
-    // It became easy to convert because the program is taking Kilo as reference
-    double unitConversionVal = fromUnitInKilo / unitConversionValue(toUnit);
-    toTextController.text = unitConversionVal.toString();
-  }
 
   @override
   void dispose() {
@@ -127,11 +88,14 @@ class _WeightConverter extends State<WeightConverterState> {
                 width: 500,
                 child: TextButton(
                   onPressed: () {
-                    convertUnit(
+                    String convertedValue = convertUnit(
                       double.parse(fromTextController.text),
                       fromDropdownValue,
                       toDropdownValue,
+                      referenceUnit,
                     );
+
+                    toTextController.text = convertedValue;
                   },
                   child: Padding(
                     padding:

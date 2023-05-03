@@ -13,6 +13,8 @@ class Conversion extends StatefulWidget {
 class _ConversionState extends State<Conversion> {
   int selectedIndex = 0;
 
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void dispose() {
     super.dispose();
