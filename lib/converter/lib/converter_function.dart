@@ -12,9 +12,8 @@ double unitConversionValue(String unit) {
     case 'Tonne (t)':
       return TONNE_TO_KILO;
 
-    // For Volume Conveter
+    // For Volume Converter
 
-    
     default:
       return -1;
   }
@@ -32,18 +31,18 @@ String convertUnit(
   }
 
   // Converting the fromValue to Standard Unit to ease the conversion
-  double fromUnitInReference = fromValue * unitConversionValue(fromUnit);
+  double fromUnitValueInReferenceUnit =
+      fromValue * unitConversionValue(fromUnit);
 
-  // If the toUnit is Kilogram then return that only
+  // If the toUnit is the referenceUnit then return that only
   if (toUnit == referenceUnit) {
-    return fromUnitInReference.toString();
+    return fromUnitValueInReferenceUnit.toString();
   }
 
-  // If it is something other than Kilogram
-  // Basically first it gets the conversion value then it divides
-  // the conversion value with the fromUnitInReference which is calculated
-  // It became easy to convert because the program.
+  // If it is something other than referenceUnit:
+  // First get the conversion value, then divde
+  // the conversion value from fromUnitValueInReferenceUnit and return it.
   double toUnitConversionValue =
-      fromUnitInReference / unitConversionValue(toUnit);
+      fromUnitValueInReferenceUnit / unitConversionValue(toUnit);
   return toUnitConversionValue.toString();
 }
