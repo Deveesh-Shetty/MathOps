@@ -1,4 +1,4 @@
-import 'package:calculator/converter/constants/constants.dart';
+import 'package:calculator/converter/utils/constants.dart';
 
 double unitConversionValue(String unit) {
   switch (unit) {

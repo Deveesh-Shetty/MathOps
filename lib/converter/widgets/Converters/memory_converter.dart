@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:calculator/converter/widgets/text_and_dropdown.dart';
-import 'package:calculator/converter/lib/converter_function.dart';
+import 'package:calculator/converter/utils/converter_function.dart';
 
 class MemoryConverterState extends StatefulWidget {
   const MemoryConverterState({super.key});
