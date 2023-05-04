@@ -11,7 +11,7 @@ class VolumeConverterState extends StatefulWidget {
 }
 
 class _VolumeConverter extends State<VolumeConverterState> {
-  final List<String> weighingUnitsList = [
+  final List<String> volumeUnitsList = [
     'Litre (l)',
     'millilitre (ml)',
     'cubic meter (m3)',
@@ -19,7 +19,7 @@ class _VolumeConverter extends State<VolumeConverterState> {
     'gallon (g)'
   ];
 
-  // Taking Kilogram in reference
+  // Taking Litre as reference
   String referenceUnit = 'Litre (l)';
 
   final TextEditingController fromTextController = TextEditingController();
@@ -54,7 +54,7 @@ class _VolumeConverter extends State<VolumeConverterState> {
                   label: Text('Volume'),
                   icon: FaIcon(FontAwesomeIcons.water),
                 ),
-                list: weighingUnitsList,
+                list: volumeUnitsList,
                 onChange: (newValue) {
                   setState(() {
                     fromDropdownValue = newValue!;
@@ -73,7 +73,7 @@ class _VolumeConverter extends State<VolumeConverterState> {
                   label: Text('Volume'),
                   icon: FaIcon(FontAwesomeIcons.water),
                 ),
-                list: weighingUnitsList,
+                list: volumeUnitsList,
                 onChange: (newValue) {
                   setState(() {
                     toDropdownValue = newValue!;

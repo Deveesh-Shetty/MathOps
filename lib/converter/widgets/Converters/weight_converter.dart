@@ -18,7 +18,7 @@ class _WeightConverter extends State<WeightConverterState> {
     'Tonne (t)'
   ];
 
-  // Taking Kilogram in reference
+  // Taking Kilogram as reference
   String referenceUnit = 'Kilogram (kg)';
 
   final TextEditingController fromTextController = TextEditingController();

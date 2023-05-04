@@ -11,7 +11,7 @@ class MemoryConverterState extends StatefulWidget {
 }
 
 class _MemoryConverter extends State<MemoryConverterState> {
-  final List<String> weighingUnitsList = [
+  final List<String> memoryUnitsList = [
     'PetaByte (PB)',
     'TeraByte (TB)',
     'GigaByte (GB)',
@@ -22,7 +22,7 @@ class _MemoryConverter extends State<MemoryConverterState> {
     'Bit (b)'
   ];
 
-  // Taking Kilogram in reference
+  // Taking MB as reference
   String referenceUnit = 'MegaByte (MB)';
 
   final TextEditingController fromTextController = TextEditingController();
@@ -57,7 +57,7 @@ class _MemoryConverter extends State<MemoryConverterState> {
                   label: Text('Memory Size'),
                   icon: FaIcon(FontAwesomeIcons.memory),
                 ),
-                list: weighingUnitsList,
+                list: memoryUnitsList,
                 onChange: (newValue) {
                   setState(() {
                     fromDropdownValue = newValue!;
@@ -76,7 +76,7 @@ class _MemoryConverter extends State<MemoryConverterState> {
                   label: Text('Memory Size'),
                   icon: FaIcon(FontAwesomeIcons.memory),
                 ),
-                list: weighingUnitsList,
+                list: memoryUnitsList,
                 onChange: (newValue) {
                   setState(() {
                     toDropdownValue = newValue!;
