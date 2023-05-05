@@ -42,6 +42,38 @@ double unitConversionValue(String unit) {
     case 'Bit (b)':
       return BIT_TO_MB;
 
+    // For Length Converter
+    case 'Astronomical Unit (AU)':
+      return ASTRONOMICALUNIT_TO_M;
+    case 'Light Year (ly)':
+      return LIGHTYEAR_TO_M;
+    case 'Parsec (pc)':
+      return PARSEC_TO_M;
+    case 'Mile (mi)':
+      return MILE_TO_M;
+    case 'Kilometer (km)':
+      return KM_TO_M;
+    case 'Meter (m)':
+      return M_TO_M;
+    case 'Centimeter (cm)':
+      return CENTIMETER_TO_M;
+    case 'Millimeter (mm)':
+      return MILLIMETER_TO_M;
+    case 'Micrometer (μm)':
+      return MICROMETER_TO_M;
+    case 'Nanometer (nm)':
+      return NANOMETER_TO_M;
+    case 'Angstorm (Å)':
+      return ANGSTORM_TO_M;
+    case 'Picometer (pm)':
+      return PICOMETER_TO_M;
+    case 'Yard (yd)':
+      return YARD_TO_M;
+    case 'Foot (ft)':
+      return FOOT_TO_M;
+    case 'Inch (in)':
+      return INCH_TO_M;
+
     default:
       return -1;
   }

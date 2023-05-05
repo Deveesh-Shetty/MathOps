@@ -32,3 +32,23 @@ const double MB_TO_MB = 1;
 const double GB_TO_MB = DIFFERENCE;
 const double TB_TO_MB = GB_TO_MB * DIFFERENCE;
 const double PB_TO_MB = TB_TO_MB * DIFFERENCE;
+
+// For Length Converter
+
+const double LIGHTYEAR_TO_M = 9460730472580800;
+const double ASTRONOMICALUNIT_TO_M = 149597870700;
+// Parsec should be 30856775814913670 but dart is giving error on that
+// but not on the current value which is +2 more than that -_-
+const double PARSEC_TO_M = 30856775814913672;
+const double MILE_TO_M = 1609.344;
+const double KM_TO_M = 1000;
+const double M_TO_M = 1;
+const double CENTIMETER_TO_M = 0.01;
+const double MILLIMETER_TO_M = 0.001;
+const double MICROMETER_TO_M = MILLIMETER_TO_M / 1000;
+const double NANOMETER_TO_M = MICROMETER_TO_M / 1000;
+const double ANGSTORM_TO_M = NANOMETER_TO_M / 10;
+const double PICOMETER_TO_M = NANOMETER_TO_M / 1000;
+const double YARD_TO_M = 0.9144;
+const double FOOT_TO_M = 0.3048;
+const double INCH_TO_M = 0.0254;
