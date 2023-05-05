@@ -52,3 +52,8 @@ const double PICOMETER_TO_M = NANOMETER_TO_M / 1000;
 const double YARD_TO_M = 0.9144;
 const double FOOT_TO_M = 0.3048;
 const double INCH_TO_M = 0.0254;
+
+// For Temperature Converter
+const double CELSIUS_TO_CELSIUS = 1;
+const double FAHRENHEIT_TO_CELSIUS = 1;
+const double KELVIN_TO_CELSIUS = -273.15;

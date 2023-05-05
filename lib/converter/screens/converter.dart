@@ -5,6 +5,7 @@ import 'package:calculator/converter/widgets/Converters/weight_converter.dart';
 import 'package:calculator/converter/widgets/Converters/volume_converter.dart';
 import 'package:calculator/converter/widgets/Converters/memory_converter.dart';
 import 'package:calculator/converter/widgets/Converters/length_converter.dart';
+import 'package:calculator/converter/widgets/Converters/temperature_converter.dart';
 
 class Conversion extends StatefulWidget {
   const Conversion({super.key});
@@ -38,7 +39,7 @@ class _ConversionState extends State<Conversion> {
         page = LengthConverterState();
         break;
       case 3:
-        page = Placeholder();
+        page = TemperatureConverterState();
         break;
       case 4:
         page = MemoryConverterState();

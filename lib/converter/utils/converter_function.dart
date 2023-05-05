@@ -74,6 +74,14 @@ double unitConversionValue(String unit) {
     case 'Inch (in)':
       return INCH_TO_M;
 
+    // For Temperature Converter
+    case 'Celsius (°C)':
+      return CELSIUS_TO_CELSIUS;
+    case 'Fahrenheit (°F)':
+      return FAHRENHEIT_TO_CELSIUS;
+    case 'Kelvin (K)':
+      return KELVIN_TO_CELSIUS;
+
     default:
       return -1;
   }
