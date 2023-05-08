@@ -5,6 +5,7 @@ import 'package:calculator/converter/widgets/Converters/weight_converter.dart';
 import 'package:calculator/converter/widgets/Converters/volume_converter.dart';
 import 'package:calculator/converter/widgets/Converters/memory_converter.dart';
 import 'package:calculator/converter/widgets/Converters/length_converter.dart';
+import 'package:calculator/converter/widgets/Converters/bmi_calculator.dart';
 
 class Conversion extends StatefulWidget {
   const Conversion({super.key});
@@ -47,7 +48,7 @@ class _ConversionState extends State<Conversion> {
         page = Placeholder();
         break;
       case 6:
-        page = Placeholder();
+        page = BMICalculatorState();
         break;
       default:
         throw UnimplementedError('No widget for $selectedIndex');
